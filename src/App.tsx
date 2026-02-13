@@ -1,8 +1,7 @@
-// src/App.tsx
-import ThreeScene from "./ThreeScene";
+import Home from "./home";
 
 function App() {
-  return <ThreeScene />;
+  return <Home />;
 }
 
 export default App;

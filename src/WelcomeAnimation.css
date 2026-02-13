@@ -1,7 +1,7 @@
 .welcome-animation-wrapper {
   background: #ffffff;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: calc(75vh - 3rem);
   position: relative;
@@ -358,3 +358,97 @@
 .sparkle-ray:nth-child(6) { transform: translate(-50%, -50%) rotate(45deg) scaleY(0.5); }
 .sparkle-ray:nth-child(7) { transform: translate(-50%, -50%) rotate(90deg) scaleY(0.5); }
 .sparkle-ray:nth-child(8) { transform: translate(-50%, -50%) rotate(135deg) scaleY(0.5); }
+
+/* Card columns */
+.card-column {
+  width: 300px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+}
+
+.card-track {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 12px;
+}
+
+.card-track-up {
+  animation: scrollUp 25s linear infinite;
+}
+
+.card-track-down {
+  animation: scrollDown 25s linear infinite;
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+.project-card {
+  background: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  padding: 24px 20px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.project-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #ff9a76, #ff4d7d);
+  border-radius: 0;
+}
+
+.project-card-title {
+  font-family: "Parkinsans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 6px 0;
+}
+
+.project-card-desc {
+  font-family: "Parkinsans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #888;
+  margin: 0;
+  line-height: 1.4;
+}

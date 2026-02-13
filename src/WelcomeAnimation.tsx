@@ -5,6 +5,30 @@ import './WelcomeAnimation.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const projects = [
+  { title: 'REMEDA', desc: 'AI-powered clinical platform for intake, transcription & real-time provider tools with OpenMRS FHIR integration.', tags: 'React · Flask · FHIR' },
+  { title: 'Surgical Video AI', desc: 'Segmentation & classification pipelines for surgical videos with task-specific overlays and real-time inference.', tags: 'Python · PyTorch · React' },
+  { title: 'SickKids Research', desc: 'Algorithm to process sensor data — heart rate, skin proximity, EDA — and track device wear time for paediatric thrombosis.', tags: 'Python · PostgreSQL · Docker' },
+  { title: 'SIIM Hackathon', desc: 'LLM-driven RAG prototype to extract structured findings from radiology reports into FHIR Observation resources.', tags: 'Python · Gemini · FHIR' },
+  { title: '3D DICOM Pipeline', desc: 'Converted 2D Cartesian image sequences into 3D DICOM volumes with spatial alignment and volumetric reconstruction.', tags: 'Python · DICOM · NumPy' },
+  { title: 'Radiology Labelling', desc: 'Expert augmentation framework for radiology report labelling to support AI model fine-tuning at scale.', tags: 'Python · NLP · Data Eng' },
+];
+
+const CardColumn = ({ direction }: { direction: 'up' | 'down' }) => (
+  <div className="card-column">
+    <div className={`card-track card-track-${direction}`}>
+      {[...projects, ...projects].map((project, i) => (
+        <div className="project-card" key={i}>
+          <div className="project-card-accent" />
+          <h3 className="project-card-title">{project.title}</h3>
+          <p className="project-card-desc">{project.desc}</p>
+          <span className="project-card-tags">{project.tags}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 const WelcomeAnimation: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -182,6 +206,7 @@ const WelcomeAnimation: React.FC = () => {
 
   return (
     <div className="welcome-animation-wrapper" ref={wrapperRef}>
+      <CardColumn direction="up" />
       <div className="welcome-container">
         <div className="welcome" ref={containerRef}></div>
         <p className="subtitle" ref={subtitleRef}>
@@ -197,6 +222,7 @@ const WelcomeAnimation: React.FC = () => {
         <div className="sparkle sparkle-2"></div>
         <div className="sparkle sparkle-3"></div>
       </div>
+      <CardColumn direction="down" />
       <div className="ground-shadow" ref={groundShadowRef}></div>
     </div>
   );

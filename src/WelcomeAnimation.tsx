@@ -6,6 +6,7 @@ const WelcomeAnimation: React.FC = () => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
     const text = "Welcome";
     const container = containerRef.current;
     if (!container) return;
@@ -20,7 +21,6 @@ const WelcomeAnimation: React.FC = () => {
       span.style.animationDelay = `${index * 0.15}s`;
 
       if (letter.toLowerCase() === 'o') {
-        // Create sparkle instead of 'o'
         const sparkleContainer = document.createElement('span');
         sparkleContainer.className = 'sparkle-letter';
         sparkleContainer.style.animationDelay = `${index * 0.15}s`;
@@ -41,24 +41,34 @@ const WelcomeAnimation: React.FC = () => {
         container.appendChild(span);
       }
 
-      // After entrance animation finishes, add idle animation
       const entranceTime = (index * 0.15 + 1.2) * 1000;
-      setTimeout(() => {
+      timers.push(setTimeout(() => {
         span.classList.add(idleAnimations[index % idleAnimations.length]);
-      }, entranceTime);
+      }, entranceTime));
     });
 
     // After subtitle animations finish, remove animation so hover works
     const subtitleWords = subtitleRef.current?.querySelectorAll('.subtitle-word');
     subtitleWords?.forEach((word, i) => {
-      const delay = 2000 + i * 120 + 500;
-      setTimeout(() => {
+      const delay = 2000 + i * 250 + 700;
+      timers.push(setTimeout(() => {
         const el = word as HTMLElement;
         el.style.animation = 'none';
         el.style.opacity = '1';
         el.classList.add('subtitle-word-ready');
-      }, delay);
+      }, delay));
     });
+
+    return () => {
+      timers.forEach(t => clearTimeout(t));
+      // Reset subtitle words so animations replay on remount
+      subtitleWords?.forEach((word) => {
+        const el = word as HTMLElement;
+        el.style.animation = '';
+        el.style.opacity = '';
+        el.classList.remove('subtitle-word-ready');
+      });
+    };
   }, []);
 
   return (

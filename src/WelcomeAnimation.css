@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  flex: 1;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
 }
@@ -19,6 +19,7 @@
   color: #000000;
   display: inline-block;
   letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .subtitle {
@@ -34,7 +35,7 @@
   display: inline-block;
   opacity: 0;
   transform: translateY(12px);
-  animation: wordSlideUp 0.5s ease-out forwards;
+  animation: wordSlideUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   cursor: default;
   transition: transform 0.3s ease;
 }
@@ -48,12 +49,12 @@
 }
 
 .subtitle-word-0 { animation-delay: 2.0s; }
-.subtitle-word-1 { animation-delay: 2.12s; }
-.subtitle-word-2 { animation-delay: 2.24s; }
-.subtitle-word-3 { animation-delay: 2.36s; }
-.subtitle-word-4 { animation-delay: 2.48s; }
-.subtitle-word-5 { animation-delay: 2.60s; }
-.subtitle-word-6 { animation-delay: 2.72s; }
+.subtitle-word-1 { animation-delay: 2.25s; }
+.subtitle-word-2 { animation-delay: 2.50s; }
+.subtitle-word-3 { animation-delay: 2.75s; }
+.subtitle-word-4 { animation-delay: 3.0s; }
+.subtitle-word-5 { animation-delay: 3.25s; }
+.subtitle-word-6 { animation-delay: 3.50s; }
 
 @keyframes wordSlideUp {
   from {

@@ -1,9 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './WelcomeAnimation.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const WelcomeAnimation: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const sparkleRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
@@ -36,6 +42,9 @@ const WelcomeAnimation: React.FC = () => {
 
         sparkleContainer.appendChild(sparkle);
         container.appendChild(sparkleContainer);
+
+        // Store ref for scroll animation
+        (sparkleRef as React.MutableRefObject<HTMLSpanElement | null>).current = sparkleContainer;
       } else {
         span.textContent = letter;
         container.appendChild(span);
@@ -71,8 +80,73 @@ const WelcomeAnimation: React.FC = () => {
     };
   }, []);
 
+  // Scroll-triggered sparkle bounce & roll animation
+  useEffect(() => {
+    let scrollCleanup: (() => void) | undefined;
+    // Wait for entrance animations to finish before setting up scroll
+    const setupDelay = setTimeout(() => {
+      const sparkle = sparkleRef.current;
+      const wrapper = wrapperRef.current;
+      if (!sparkle || !wrapper) return;
+
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const sparkleRect = sparkle.getBoundingClientRect();
+
+      // Calculate how far the sparkle needs to drop to reach the very bottom of the wrapper
+      const dropDistance = wrapperRect.bottom - sparkleRect.bottom;
+      // Roll off to the right side of the screen (use viewport width to ensure it goes fully off)
+      const rollDistance = window.innerWidth - sparkleRect.left + sparkleRect.width;
+
+      // Create a timeline that auto-plays once scroll is detected
+      const tl = gsap.timeline({ paused: true });
+
+      // Phase 1: Drop to the bottom with a smooth bounce
+      tl.to(sparkle, {
+        y: dropDistance,
+        duration: 0.6,
+        ease: 'power2.in',
+      })
+      .to(sparkle, {
+        y: dropDistance * 0.7,
+        duration: 0.25,
+        ease: 'power2.out',
+      })
+      .to(sparkle, {
+        y: dropDistance,
+        duration: 0.25,
+        ease: 'power2.in',
+      })
+      // Phase 2: Roll away flat
+      .to(sparkle, {
+        x: rollDistance,
+        rotation: 720,
+        duration: 1.2,
+        ease: 'power1.in',
+      });
+
+      // Play on any scroll, reverse when back at top
+      let hasPlayed = false;
+      const onScroll = () => {
+        if (window.scrollY > 0 && !hasPlayed) {
+          hasPlayed = true;
+          tl.play();
+        } else if (window.scrollY === 0 && hasPlayed) {
+          hasPlayed = false;
+          tl.reverse();
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      scrollCleanup = () => window.removeEventListener('scroll', onScroll);
+    }, 4500); // Wait for entrance animations
+
+    return () => {
+      clearTimeout(setupDelay);
+      scrollCleanup?.();
+    };
+  }, []);
+
   return (
-    <div className="welcome-animation-wrapper">
+    <div className="welcome-animation-wrapper" ref={wrapperRef}>
       <div className="welcome-container">
         <div className="welcome" ref={containerRef}></div>
         <p className="subtitle" ref={subtitleRef}>

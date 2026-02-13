@@ -10,6 +10,7 @@ const WelcomeAnimation: React.FC = () => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const sparkleRef = useRef<HTMLSpanElement>(null);
+  const groundShadowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
@@ -87,42 +88,76 @@ const WelcomeAnimation: React.FC = () => {
     const setupDelay = setTimeout(() => {
       const sparkle = sparkleRef.current;
       const wrapper = wrapperRef.current;
-      if (!sparkle || !wrapper) return;
+      const shadow = groundShadowRef.current;
+      if (!sparkle || !wrapper || !shadow) return;
 
       const wrapperRect = wrapper.getBoundingClientRect();
       const sparkleRect = sparkle.getBoundingClientRect();
 
-      // Calculate how far the sparkle needs to drop to reach the very bottom of the wrapper
+      // Calculate how far the sparkle needs to drop so its bottom edge hits the wrapper bottom
       const dropDistance = wrapperRect.bottom - sparkleRect.bottom;
       // Roll off to the right side of the screen (use viewport width to ensure it goes fully off)
       const rollDistance = window.innerWidth - sparkleRect.left + sparkleRect.width;
+
+      // Position the ground shadow at the landing spot
+      const sparkleCenter = sparkleRect.left + sparkleRect.width / 2 - wrapperRect.left;
+      gsap.set(shadow, {
+        left: sparkleCenter,
+        bottom: -8,
+        xPercent: -50,
+      });
 
       // Create a timeline that auto-plays once scroll is detected
       const tl = gsap.timeline({ paused: true });
 
       // Phase 1: Drop to the bottom with a smooth bounce
+      // Shadow grows as star falls
       tl.to(sparkle, {
         y: dropDistance,
         duration: 0.6,
         ease: 'power2.in',
       })
+      .to(shadow, {
+        opacity: 0.5,
+        scaleX: 1,
+        duration: 0.6,
+        ease: 'power2.in',
+      }, '<')
       .to(sparkle, {
         y: dropDistance * 0.7,
         duration: 0.25,
         ease: 'power2.out',
       })
+      .to(shadow, {
+        opacity: 0.25,
+        scaleX: 0.6,
+        duration: 0.25,
+        ease: 'power2.out',
+      }, '<')
       .to(sparkle, {
         y: dropDistance,
         duration: 0.25,
         ease: 'power2.in',
       })
-      // Phase 2: Roll away flat
+      .to(shadow, {
+        opacity: 0.5,
+        scaleX: 1,
+        duration: 0.25,
+        ease: 'power2.in',
+      }, '<')
+      // Phase 2: Roll away flat — shadow follows
       .to(sparkle, {
         x: rollDistance,
         rotation: 720,
         duration: 1.2,
         ease: 'power1.in',
-      });
+      })
+      .to(shadow, {
+        x: rollDistance,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power1.in',
+      }, '<');
 
       // Play on any scroll, reverse when back at top
       let hasPlayed = false;
@@ -156,12 +191,13 @@ const WelcomeAnimation: React.FC = () => {
           <span className="subtitle-word subtitle-word-3">part</span>{' '}
           <span className="subtitle-word subtitle-word-4">of</span>{' '}
           <span className="subtitle-word subtitle-word-5">the</span>{' '}
-          <span className="subtitle-word subtitle-word-6">internet</span>
+          <span className="subtitle-word subtitle-word-6">internet.</span>
         </p>
         <div className="sparkle sparkle-1"></div>
         <div className="sparkle sparkle-2"></div>
         <div className="sparkle sparkle-3"></div>
       </div>
+      <div className="ground-shadow" ref={groundShadowRef}></div>
     </div>
   );
 };

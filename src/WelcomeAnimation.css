@@ -3,15 +3,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 3rem);
+  height: calc(75vh - 3rem);
   position: relative;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Parkinsans", sans-serif;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ground-shadow {
+  position: absolute;
+  width: 80px;
+  height: 16px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+  border-radius: 100%;
+  opacity: 0;
+  transform: scaleX(0.2);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .welcome-container {
   text-align: center;
   position: relative;
+  margin-top: -1.75rem;
+  z-index: 2;
 }
 
 .welcome {
@@ -25,10 +40,10 @@
 
 .subtitle {
   font-size: clamp(14px, 3vw, 28px);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Parkinsans", sans-serif;
   font-weight: 400;
   color: #555;
-  margin-top: -0.5em;
+  margin-top: 0.1em;
   letter-spacing: 0.02em;
 }
 
@@ -298,8 +313,9 @@
   transform: translate(-50%, -50%);
   animation: sparkleSpinIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   animation-delay: inherit;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, filter 0.3s ease;
   cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(255, 77, 125, 0.3));
 }
 
 .inline-sparkle:hover {

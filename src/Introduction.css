@@ -1,4 +1,91 @@
-.introduction {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #ff9a76 0%, #ff6b9d 50%, #ff4d7d 100%);
+.about {
+  min-height: 60vh;
+  background: linear-gradient(135deg, #6bcf9f 0%, #64b5f6 40%, #b388ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem clamp(2rem, 5vw, 6rem);
+  font-family: "Parkinsans", sans-serif;
+}
+
+.about-inner {
+  display: flex;
+  gap: clamp(3rem, 6vw, 8rem);
+  width: 100%;
+  align-items: flex-start;
+}
+
+.about-bio {
+  flex: 1;
+}
+
+.about-heading {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  color: #1a2a3a;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.about-text {
+  font-size: clamp(15px, 1.8vw, 19px);
+  color: #2a3a4a;
+  line-height: 1.7;
+  margin: 0 0 1rem 0;
+  text-align: justify;
+}
+
+.about-skills {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skill-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(30, 50, 70, 0.6);
+  margin: 0;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1a2a3a;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(30, 50, 70, 0.15);
+  padding: 6px 14px;
+  border-radius: 0;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(255, 255, 255, 0.45);
+  border-color: rgba(30, 50, 70, 0.25);
+}
+
+@media (max-width: 768px) {
+  .about-inner {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .about {
+    padding: 4rem 1.5rem;
+  }
 }

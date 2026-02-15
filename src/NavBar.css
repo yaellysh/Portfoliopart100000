@@ -17,7 +17,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  background: linear-gradient(135deg, #ff9a76, #ff4d7d);
+  background: linear-gradient(135deg, #6bcf9f, #64b5f6, #b388ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -48,7 +48,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(135deg, #ff9a76, #ff4d7d);
+  background: linear-gradient(135deg, #6bcf9f, #64b5f6, #b388ff);
   border-radius: 1px;
   transition: width 0.3s ease;
 }

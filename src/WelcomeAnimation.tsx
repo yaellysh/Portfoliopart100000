@@ -206,7 +206,6 @@ const WelcomeAnimation: React.FC = () => {
 
   return (
     <div className="welcome-animation-wrapper" ref={wrapperRef}>
-      <CardColumn direction="up" />
       <div className="welcome-container">
         <div className="welcome" ref={containerRef}></div>
         <p className="subtitle" ref={subtitleRef}>
@@ -222,7 +221,9 @@ const WelcomeAnimation: React.FC = () => {
         <div className="sparkle sparkle-2"></div>
         <div className="sparkle sparkle-3"></div>
       </div>
-      <CardColumn direction="down" />
+      <div className="card-column-wrapper">
+        <CardColumn direction="down" />
+      </div>
       <div className="ground-shadow" ref={groundShadowRef}></div>
     </div>
   );

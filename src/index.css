@@ -17,6 +17,8 @@ html, body, #root {
 }
 
 .footer-gradient {
+  position: relative;
+  z-index: 20;
   height: 40vh;
   background: linear-gradient(135deg, #6bcf9f 0%, #64b5f6 40%, #b388ff 100%);
 }

@@ -6,6 +6,9 @@
   justify-content: center;
   padding: 6rem clamp(2rem, 5vw, 6rem);
   font-family: "Parkinsans", sans-serif;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .about-inner {

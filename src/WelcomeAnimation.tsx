@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import './WelcomeAnimation.css';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const projects = [
   { title: 'REMEDA', desc: 'AI-powered clinical platform for intake, transcription & real-time provider tools with OpenMRS FHIR integration.', tags: 'React · Flask · FHIR' },
@@ -14,11 +15,19 @@ const projects = [
   { title: 'Radiology Labelling', desc: 'Expert augmentation framework for radiology report labelling to support AI model fine-tuning at scale.', tags: 'Python · NLP · Data Eng' },
 ];
 
+const scrollToProjects = () => {
+  gsap.to(window, {
+    scrollTo: '.projects-wrapper',
+    duration: 1.2,
+    ease: 'power2.inOut',
+  });
+};
+
 const CardColumn = ({ direction }: { direction: 'up' | 'down' }) => (
   <div className="card-column">
     <div className={`card-track card-track-${direction}`}>
       {[...projects, ...projects].map((project, i) => (
-        <div className="project-card" key={i}>
+        <div className="project-card" key={i} onClick={scrollToProjects} style={{ cursor: 'pointer' }}>
           <div className="project-card-accent" />
           <h3 className="project-card-title">{project.title}</h3>
           <p className="project-card-desc">{project.desc}</p>
